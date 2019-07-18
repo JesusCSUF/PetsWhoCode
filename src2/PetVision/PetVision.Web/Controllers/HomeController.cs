@@ -26,5 +26,21 @@ namespace PetVision.Web.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult UploadImage(HttpPostedFileBase file)
+        {
+            ViewBag.AlertStatus = "alert-danger";
+            ViewBag.FileStatus = "Failed";
+            if (file != null)
+            {
+                var stream = file.InputStream;
+                ViewBag.AlertStatus = "alert-success";
+                ViewBag.FileStatus = "Success";
+                return View("Index", stream);
+            }
+
+            return View("Index");
+        }
     }
 }
