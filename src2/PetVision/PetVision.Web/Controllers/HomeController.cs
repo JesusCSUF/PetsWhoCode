@@ -1,6 +1,8 @@
-﻿using System;
+﻿using PetVision.Web.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 
@@ -28,19 +30,21 @@ namespace PetVision.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadImage(HttpPostedFileBase file)
+        public ActionResult UploadImage()/*HttpPostedFileBase file*/
         {
             ViewBag.AlertStatus = "alert-danger";
             ViewBag.FileStatus = "Failed";
-            if (file != null)
-            {
-                var stream = file.InputStream;
-                ViewBag.AlertStatus = "alert-success";
-                ViewBag.FileStatus = "Success";
-                return View("Index", stream);
-            }
+            var stream = this.Request.Files[0].InputStream;
+            if (stream.Length == 0)
+                return View("Index");
 
-            return View("Index");
+            var swriter = new FileStreamResult(stream, MediaTypeNames.Image.Jpeg);
+
+            ViewBag.AlertStatus = "alert-success";
+            ViewBag.FileStatus = "Success";
+
+            return swriter;
+            //return View("Index", new ImageToUpload { File = swriter, FileName = "Test" });
         }
     }
 }
