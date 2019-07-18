@@ -19,7 +19,7 @@ namespace PetVision.Web.Controllers
                 {
                     ClaimAmount = x.ClaimAmount,
                     Condition = x.DiagnosisCodeDesc,
-                    PaidAdmount = x.PaidAmount,
+                    PaidAmount = x.PaidAmount,
                 }).ToList();
 
                 var dataModel = new PetVision.Web.Models.QuotePageOneDataModel
