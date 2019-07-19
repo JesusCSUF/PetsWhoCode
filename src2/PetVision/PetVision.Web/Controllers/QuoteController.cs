@@ -160,8 +160,10 @@ namespace PetVision.Web.Controllers
             return null;
         }
 
-
-
-
+        //[HttpPost]
+        public ActionResult Billing()
+        {
+            return View("Billing");
+        }
     }
 }
