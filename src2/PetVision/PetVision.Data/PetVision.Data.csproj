@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ClaimDataContext.cs" />
     <Compile Include="DTO\Condition.cs" />
+    <Compile Include="DTO\PetsInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

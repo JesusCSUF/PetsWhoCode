@@ -167,6 +167,7 @@
     </Compile>
     <Compile Include="Models\ImageToUpload.cs" />
     <Compile Include="Models\PetInfo.cs" />
+    <Compile Include="Models\PredictionResult.cs" />
     <Compile Include="Models\QuotePageOneDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

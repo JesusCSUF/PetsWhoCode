@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction;
+using Newtonsoft.Json;
 using PetVision.Web.Models;
 using RestSharp;
 using System;
@@ -50,33 +51,10 @@ namespace PetVision.Web.Controllers
             ViewBag.FileStatus = "Success";
 
             var imgByteArray = ReadFully(stream);
-            MakePredictionRequest(imgByteArray);
+            var result = MakePredictionRequest2(imgByteArray);
 
-
-//            var aiImageUrl = "https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/041d0e5b-306b-4f6b-9808-4e8f3fc90952/classify/iterations/IterationOne/image";
-            //var aiImageUrl = "https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/";
-            //var imageinBase64 = Convert.ToBase64String(ReadFully(stream));
-//            var predictionKey = "4d81205e0c5541e69003d0d8bc9717a5";
-            /*
-            var client = new CustomVisionPredictionClient()
-            {
-                ApiKey = predictionKey,
-                Endpoint = aiImageUrl
-            };
-
-            var projectId = new Guid("041d0e5b-306b-4f6b-9808-4e8f3fc90952");
-            var prediction = client.ClassifyImage(projectId, "IterationOne", stream);
-            */
-            
-//            var client = new RestClient(aiImageUrl);
-//            var request = new RestRequest(Method.POST);
-//            request.AddHeader("Prediction-Key", "4d81205e0c5541e69003d0d8bc9717a5");
-//            request.AddHeader("Content-Type", "application/octet-stream");
-            //request.AddJsonBody
-//            request.AddBody()
-
-            swriter.FileStream.Position = 0; // reseting the position
-            return swriter;
+            var predictions = JsonConvert.DeserializeObject<PredictionResult>(result);
+            return RedirectToAction("index","quote", new { data = predictions });
             //return View("Index", new ImageToUpload { File = swriter, FileName = "Test" });
         }
 
@@ -89,7 +67,55 @@ namespace PetVision.Web.Controllers
             }
         }
 
-        public static async Task MakePredictionRequest(byte[] byteData)//string imageFilePath)
+       
+
+
+
+
+        public string MakePredictionRequest2(byte[] byteData)//string imageFilePath)
+        {
+            var client = new HttpClient();
+
+            // Request headers - replace this example key with your valid Prediction-Key.
+            client.DefaultRequestHeaders.Add("Prediction-Key", "4d81205e0c5541e69003d0d8bc9717a5");
+
+            // Prediction URL - replace this example URL with your valid Prediction URL.
+            string url = "https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/041d0e5b-306b-4f6b-9808-4e8f3fc90952/classify/iterations/IterationOne/image";
+
+            HttpResponseMessage response;
+
+            // Request body. Try this sample with a locally stored image.
+            //byte[] byteData = GetImageAsByteArray(imageFilePath);
+
+            using (var content = new ByteArrayContent(byteData))
+            {
+                 var requestMessage = GetBasicHttpRequest(HttpMethod.Post, url, "", content);
+
+
+
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response =  client.SendAsync(requestMessage).Result;
+                //Console.WriteLine(await response.Content.ReadAsStringAsync());
+                var result = response.Content.ReadAsStringAsync().Result;
+                return  result;
+            }            
+        }
+
+
+
+        private static HttpRequestMessage GetBasicHttpRequest(HttpMethod method, string requestUri, string authToken, HttpContent content = null)
+        {
+            var httpRequest = new HttpRequestMessage(method, requestUri);
+            //httpRequest.Headers.Add("Authorization", authToken);
+
+            if (content != null)
+                httpRequest.Content = content;
+
+            return httpRequest;
+        }
+
+
+        public async Task MakePredictionRequest(byte[] byteData)//string imageFilePath)
         {
             var client = new HttpClient();
 
@@ -113,35 +139,6 @@ namespace PetVision.Web.Controllers
             }
         }
 
-        /*public static void MakePredictionRequest(byte[] byteData)//string imageFilePath)
-        {
-            var client = new HttpClient();
 
-            // Request headers - replace this example key with your valid Prediction-Key.
-            client.DefaultRequestHeaders.Add("Prediction-Key", "4d81205e0c5541e69003d0d8bc9717a5");
-
-            // Prediction URL - replace this example URL with your valid Prediction URL.
-            string url = "https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/041d0e5b-306b-4f6b-9808-4e8f3fc90952/classify/iterations/IterationOne/image";
-
-            HttpResponseMessage response;
-
-            // Request body. Try this sample with a locally stored image.
-            //byte[] byteData = GetImageAsByteArray(imageFilePath);
-
-            using (var content = new ByteArrayContent(byteData))
-            {
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                response = client.PostAsync(url, content);
-                //Console.WriteLine(await response.Content.ReadAsStringAsync());
-                var result = await response.Content.ReadAsStringAsync();
-            }
-        }*/
-
-        /*private static byte[] GetImageAsByteArray(string imageFilePath)
-        {
-            FileStream fileStream = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read);
-            BinaryReader binaryReader = new BinaryReader(fileStream);
-            return binaryReader.ReadBytes((int)fileStream.Length);
-        }*/
     }
 }

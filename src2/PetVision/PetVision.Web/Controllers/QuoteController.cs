@@ -34,13 +34,16 @@ namespace PetVision.Web.Controllers
                 }).ToList();
 
 
+                var stuff2 = ctx.PetInfos.Take(3).ToList();
+
+
+
                 var dataModel = new PetVision.Web.Models.QuotePageOneDataModel
                 {
                     PetInfos = stuff,
                     ConditionRanking = stuff.Select(x => x.Condition).ToList(),
                     IpAdress = ipAddress,
                 };
-
 
                 return View(dataModel);
             }
