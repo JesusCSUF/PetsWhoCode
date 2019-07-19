@@ -35,6 +35,12 @@
         ];
 
         $(function () {
+
+            var ipAddy = @Html.Raw(Json.Encode(Model.IpAdress));
+            //alert(ipAddy);
+
+
+
             Chart.platform.disableCSSInjection = true;
 
             var petinfos = @Html.Raw(Json.Encode(Model.PetInfos));

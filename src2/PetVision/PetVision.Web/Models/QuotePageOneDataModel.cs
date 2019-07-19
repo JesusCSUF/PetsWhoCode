@@ -9,5 +9,8 @@ namespace PetVision.Web.Models
     {
         public IEnumerable<PetInfo> PetInfos { get; set; }
         public List<string> ConditionRanking { get; set; }
+
+
+        public string IpAdress { get; set; }
     }
 }
