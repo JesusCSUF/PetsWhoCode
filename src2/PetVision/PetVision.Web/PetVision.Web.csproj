@@ -175,6 +175,7 @@
     <Compile Include="Models\Owner.cs" />
     <Compile Include="Models\PaymentCycle.cs" />
     <Compile Include="Models\Pet.cs" />
+    <Compile Include="Models\PetCondition.cs" />
     <Compile Include="Models\PetInfo.cs" />
     <Compile Include="Models\PetPricing.cs" />
     <Compile Include="Models\PostQuoteResponse.cs" />
