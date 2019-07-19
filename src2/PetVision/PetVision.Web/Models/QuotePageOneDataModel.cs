@@ -13,5 +13,7 @@ namespace PetVision.Web.Models
         public byte[] PetImage { get; set; }
 
         public PetInfo PetInfo { get; set; }
+
+        public List<PetPricing> PetPricings { get; set; }
     }
 }

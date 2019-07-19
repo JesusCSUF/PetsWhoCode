@@ -58,6 +58,7 @@ namespace PetVision.Web.Controllers
                     Traits = petInfos.Traits,
                 };
 
+
                 var quote = CreateQuote(new QuoteRequest
                 {
                     SourceSystemId = newQec,
@@ -89,7 +90,8 @@ namespace PetVision.Web.Controllers
                     ConditionRanking = claimData.Select(x => x.Condition).ToList(),
                     PetImage = petImage,     
                     PredictedBreed = predictedBreed.TagName,
-                    PetInfo = petInfoOut
+                    PetInfo = petInfoOut,
+                    
                 };
 
                 return View(dataModel);
