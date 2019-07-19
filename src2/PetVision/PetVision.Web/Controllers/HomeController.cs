@@ -44,7 +44,7 @@ namespace PetVision.Web.Controllers
                 ViewBag.FileStatus = "Failed";
                 return View("Index");
             }
-            var stream = file.AttachedFile.InputStream;
+            var stream = file.AttachedFile.InputStream; //this.Request.Files[0].InputStream;
             if (stream.Length == 0)
                 return View("Index");
 
@@ -57,7 +57,14 @@ namespace PetVision.Web.Controllers
             var result = MakePredictionRequest2(imgByteArray);
 
             var predictions = JsonConvert.DeserializeObject<PredictionResult>(result);
+
+            TempData["PetImage"] = imgByteArray;
             TempData["PetPrediction"] = predictions;
+            TempData["PetCity"] = file.City;
+            TempData["PetState"] = file.State;
+            TempData["PetZipCode"] = file.ZipCode;
+
+            //return View("Quote/Index", file);
             return RedirectToAction("index","quote");
             //return View("Index", new ImageToUpload { File = swriter, FileName = "Test" });
         }

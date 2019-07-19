@@ -14,20 +14,23 @@ namespace PetVision.Web.Controllers
         public ActionResult Index()
         {
             var prediction = (PredictionResult)TempData.Peek("PetPrediction");
-            var result = prediction.Predictions.OrderByDescending(x => x.Probability).First(x=>x.TagName != "Canine" && x.TagName != "Feline");
+            var petImage = (byte[])TempData.Peek("PetImage");
 
-            string ipAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            if (string.IsNullOrEmpty(ipAddress))
+            var petCity = TempData.Peek("PetCity");
+            var petState = TempData.Peek("PetState");
+            var petZipCode = TempData.Peek("PetZipCode");
+            //var predictedBreed = prediction.Predictions.OrderByDescending(x => x.Probability).First(x=>x.TagName != "Canine" && x.TagName != "Feline");
+
+            var predictedBreed = new Prediction
             {
-                ipAddress = Request.ServerVariables["REMOTE_ADDR"];
-            }
+                TagName = "American Curl Shorthair",
+            };
 
-            
-            ipAddress = "64.209.128.78";
+            petState = "CA";
 
             using (var ctx = new ClaimDataContext())
             {
-                var stuff = ctx.Conditions.Take(3).OrderBy(x => x.Breed).OrderBy(x => x.Rank).Select(x => new PetInfo
+                var claimData = ctx.Conditions.Where(x => x.Breed == predictedBreed.TagName.ToUpper() && x.State == petState.ToString()).OrderBy(x => x.Rank).Take(3).Select(x => new PetCondition
                 {
                     ClaimAmount = x.ClaimAmount,
                     Condition = x.DiagnosisCodeDesc,
@@ -35,16 +38,28 @@ namespace PetVision.Web.Controllers
                     Rank = x.Rank,
                 }).ToList();
 
-
-                var stuff2 = ctx.PetInfos.Take(3).ToList();
+                var petInfos = ctx.PetInfos.First(x => x.Breed == predictedBreed.TagName);
+                
+                
+                
+                var petInfoOut =  new PetInfo
+                {
+                    AccordinTo = petInfos.AccordingTo,
+                    Issues = petInfos.Issues,
+                    Link = petInfos.Link,
+                    Originated = petInfos.Originated,
+                    Traits = petInfos.Traits,
+                };
 
 
 
                 var dataModel = new PetVision.Web.Models.QuotePageOneDataModel
                 {
-                    PetInfos = stuff,
-                    ConditionRanking = stuff.Select(x => x.Condition).ToList(),
-                    IpAdress = ipAddress,
+                    PetConditions = claimData,
+                    ConditionRanking = claimData.Select(x => x.Condition).ToList(),
+                    PetImage = petImage,     
+                    PredictedBreed = predictedBreed.TagName,
+                    PetInfo = petInfoOut
                 };
 
                 return View(dataModel);

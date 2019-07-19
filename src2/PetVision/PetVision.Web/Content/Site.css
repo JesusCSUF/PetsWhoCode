@@ -1,7 +1,7 @@
 ﻿body {
     padding-top:5px;
     padding-bottom: 20px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway';
     background-color:floralwhite;
     
 }
@@ -48,10 +48,25 @@ footer{
 .image-header{
     text-align:center;
 }
+
     .image-header img {
         border: 1px solid #ddd;
         border-radius: 4px;
         padding: 5px;        
+    }
+
+    .image-header img.img-small{
+        width:300px;
+        height:300px;
+    }
+.header-msg
+{
+    text-align:center;
+    margin-bottom:5px;
+}
+    .header-msg span {
+        font-size: 25px;
+        font-family: 'Oswald', sans-serif;
     }
 /*
 font-family: 'Oswald', sans-serif;

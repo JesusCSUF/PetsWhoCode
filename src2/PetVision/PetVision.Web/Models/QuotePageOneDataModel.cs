@@ -7,10 +7,11 @@ namespace PetVision.Web.Models
 {
     public class QuotePageOneDataModel
     {
-        public IEnumerable<PetInfo> PetInfos { get; set; }
+        public IEnumerable<PetCondition> PetConditions { get; set; }
         public List<string> ConditionRanking { get; set; }
+        public string PredictedBreed { get; set; }
+        public byte[] PetImage { get; set; }
 
-
-        public string IpAdress { get; set; }
+        public PetInfo PetInfo { get; set; }
     }
 }

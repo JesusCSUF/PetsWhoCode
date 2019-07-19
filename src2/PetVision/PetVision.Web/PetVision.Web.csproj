@@ -166,6 +166,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageToUpload.cs" />
+    <Compile Include="Models\PetCondition.cs" />
     <Compile Include="Models\PetInfo.cs" />
     <Compile Include="Models\PredictionResult.cs" />
     <Compile Include="Models\QuotePageOneDataModel.cs" />

@@ -7,9 +7,12 @@ namespace PetVision.Web.Models
 {
     public class PetInfo
     {
-        public string Condition { get; set; }
-        public decimal ClaimAmount { get; set; }
-        public decimal PaidAmount { get; set; }
-        public int Rank { get; set; }
+        public string Traits { get; set; }
+        public string Issues { get; set; }
+        public string AccordinTo { get; set; }
+        public string Link { get; set; }
+        public string Originated { get; set; }
+
+        
     }
 }

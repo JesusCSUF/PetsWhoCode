@@ -5,44 +5,91 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<ul>
-
-    @foreach (var x in Model.PetInfos)
+@{
+    string imgSrc = "";
+    if (Model.PetImage != null)
     {
-        <li>@x.Condition</li>
-
+        var base64 = Convert.ToBase64String(Model.PetImage);
+        imgSrc = String.Format("data:image/gif;base64,{0}", base64);
     }
-</ul>
+    else
+    {
+        imgSrc = "";
+    }
+}
+
+<div class="row">
+    <div class="col-sm-12 header-msg">
+        <span>
+           It looks like you got a @Model.PredictedBreed
+        </span>
+    </div>
+    <div class="col-sm-12  image-header">
+        <img class="img-small" src="@imgSrc" />
+    </div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Issue</td>
+            <td>Avg Claim</td>
+            <td>Avg Paid</td>
+            <td>Saving</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.PetConditions)
+        {
+        <tr>
+            <td>
+                @x.Condition
+            </td>
+            <td>
+                @decimal.Round(x.ClaimAmount,0)
+            </td>
+            <td>
+                @decimal.Round(x.PaidAmount,0)
+            </td>
+            <td>
+                @Decimal.Round(((x.ClaimAmount -  x.PaidAmount)/x.ClaimAmount)*100,0)%
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
 
 <div class="container-fluid">
-    <canvas id="myChart" width="200" height="200"></canvas> 
+    <div class="col-lg-6 col-md-12">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <canvas id="myChart2"></canvas>
+    </div>
 </div>
 
 
-@section scripts {
-    <script>
+    @section scripts {
+        <script>
         var backgroundColors = [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-        ];
+            'rgba(255, 206, 86, 0.2)',          
+            ];
+
+            var backgroundColors2 = [
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'];
+
+            var backgroundColorSeries1 =
+                'rgba(75, 192, 192, 0.2)';
+            var backgroundColorSeries2 =
+                'rgba(153, 102, 255, 0.2)';
+
 
         $(function () {
-
-            var ipAddy = @Html.Raw(Json.Encode(Model.IpAdress));
-            //alert(ipAddy);
-
-
-
             Chart.platform.disableCSSInjection = true;
-
-            var petinfos = @Html.Raw(Json.Encode(Model.PetInfos));
-
+            var petinfos = @Html.Raw(Json.Encode(Model.PetConditions));
             var conditionRanking = @Html.Raw(Json.Encode(Model.ConditionRanking));
 
             var index = 1;
@@ -50,21 +97,42 @@
                 return index ++ * 10;
             })
 
-
                 var ctx = document.getElementById('myChart');
                 var data = {
                     datasets: [{
                         data: conditionRankingCalc,
                         backgroundColor: backgroundColors,
                     }],
-                    labels: petinfos.map(x => x.Condition),                  
+                    labels: petinfos.map(x => x.Condition),
                 }
                 var myPieChart = new Chart(ctx, {
                     type: 'pie',
-                    data: data,                  
+                    data: data,
             })
 
-            getLocation();
+            var conditionClaimAmountCalc = petinfos.map(x => x.ClaimAmount);
+            var conditionPaidAmountCalc = petinfos.map(x => x.PaidAmount);
+
+            var ctx2 = document.getElementById('myChart2');
+            var data = {
+                datasets: [{
+                    data: conditionClaimAmountCalc,
+                    backgroundColor: backgroundColorSeries1,
+                    label: "Avg. Claim Amt",
+                },{
+                        data: conditionPaidAmountCalc,
+                        backgroundColor: backgroundColorSeries2,
+                        label: "Avg. Member Paid Amt",
+                }
+                ],
+                labels: petinfos.map(x => x.Condition),
+            }
+            new Chart(ctx2, {
+                type: 'bar',
+                data: data,
+            })
+
+
         });
-    </script>
-}
+        </script>
+    }
