@@ -12,8 +12,10 @@
         @using (Html.BeginForm("UploadImage", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-            @*<input type="file" accept="image/*;capture=camera">*@
-            @Html.EditorFor(model => model.FileName, new { htmlAttributes = new { @class = "form-control", @type = "file", @accept = "image/*;capture=camera" } })
+            @Html.TextBoxFor(model => model.AttachedFile, new { @class = "form-control", @type = "file", @accept = "image/*;capture=camera" })
+            @Html.HiddenFor(m => m.City, new { @id = "hdnCity"})
+            @Html.HiddenFor(m => m.State, new { @id = "hdnState"})
+            @Html.HiddenFor(m => m.ZipCode, new { @id = "hdnZipCode" })
             <div class="text-center">
                 <input type="submit" class="btn btn-primary">
             </div>
@@ -23,7 +25,48 @@
                     @ViewBag.FileStatus
                 </div>
             </div>
-            
+            <p id="geoLocation"></p>
         }
     </div>
 </div>
+
+@section scripts {
+    <script>
+        var x = document.getElementById("geoLocation");
+        var latlng = "";
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            latlng = position.coords.latitude + ',' + position.coords.longitude;
+            getCityStateAndCountry();
+        }
+
+        function getCityStateAndCountry() {
+            $.post(
+                "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + latlng + "&key=AIzaSyA4NE2Ar9v72TPm30ANq1ZzIdZ6AIX8Ftg",
+                successCall
+            );
+        }
+
+        function successCall(data) {
+            var city = data.results[0].address_components[2].long_name;
+            $("#hdnCity").val(city);
+            var state = data.results[0].address_components[4].long_name;
+            $("#hdnState").val(state);
+            var zipCode = data.results[0].address_components[6].long_name;
+            $("#hdnZipCode").val(zipCode);
+            console.log("City=" + city + ", State=" + state + ", ZipCode=" + zipCode);
+            x.innerHTML = "City=" + city + ", State=" + state + ", ZipCode=" + zipCode;
+        }
+        $(function () {
+            getLocation();
+        });
+    </script>
+    }

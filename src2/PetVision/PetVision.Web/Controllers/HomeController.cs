@@ -37,11 +37,15 @@ namespace PetVision.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadImage()/*HttpPostedFileBase file*/
+        public ActionResult UploadImage(ImageToUpload file)
         {
-            ViewBag.AlertStatus = "alert-danger";
-            ViewBag.FileStatus = "Failed";
-            var stream = this.Request.Files[0].InputStream;
+            if (!ModelState.IsValid)
+            {
+                ViewBag.AlertStatus = "alert-danger";
+                ViewBag.FileStatus = "Failed";
+                return View("Index");
+            }
+            var stream = file.AttachedFile.InputStream; //this.Request.Files[0].InputStream;
             if (stream.Length == 0)
                 return View("Index");
 

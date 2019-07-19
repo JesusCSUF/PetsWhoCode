@@ -8,12 +8,15 @@ using System.Web.Mvc;
 
 namespace PetVision.Web.Models
 {
-    public class ImageToUpload : HttpPostedFileBase
+    public class ImageToUpload
     {
-        [DataType(DataType.Upload)]
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Please upload an image")]
-        public string FileName { get; set; }
+        public string City { get; set; }
 
-        public FileStreamResult File { get; set; }
+        public string State { get; set; }
+
+        public string ZipCode { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please upload or take a picture of your pet.")]
+        public HttpPostedFileBase AttachedFile { get; set; }
     }
 }
