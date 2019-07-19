@@ -44,7 +44,7 @@ namespace PetVision.Web.Controllers
                 ViewBag.FileStatus = "Failed";
                 return View("Index");
             }
-            var stream = file.AttachedFile.InputStream; //this.Request.Files[0].InputStream;
+            var stream = file.AttachedFile.InputStream;
             if (stream.Length == 0)
                 return View("Index");
 
