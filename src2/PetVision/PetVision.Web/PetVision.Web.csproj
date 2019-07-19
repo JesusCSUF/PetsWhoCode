@@ -233,6 +233,7 @@
     <Content Include="Views\Home\Index - Copy.cshtml" />
     <Content Include="Views\Quote\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Quote\Billing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
