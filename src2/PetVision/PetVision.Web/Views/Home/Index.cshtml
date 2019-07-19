@@ -3,30 +3,24 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>What's your Pet</h1>
-</div>
+@using (Html.BeginForm("UploadImage", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.TextBoxFor(model => model.AttachedFile, new { @class = "inputfile", @id = "file", @name = "file", @type = "file", @accept = "image/*;capture=camera" })
+    @Html.HiddenFor(m => m.City, new { @id = "hdnCity" })
+    @Html.HiddenFor(m => m.State, new { @id = "hdnState" })
+    @Html.HiddenFor(m => m.ZipCode, new { @id = "hdnZipCode" })
+    <div class="text-center">
+        <input type="submit" class="btn btn-primary">
+    </div>
 
-<div class="row">
-    <div class="col-md-4">
-        @using (Html.BeginForm("UploadImage", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.TextBoxFor(model => model.AttachedFile, new { @class = "inputfile", @id = "file", @name = "file", @type = "file", @accept = "image/*;capture=camera" })
-            @Html.HiddenFor(m => m.City, new { @id = "hdnCity" })
-            @Html.HiddenFor(m => m.State, new { @id = "hdnState" })
-            @Html.HiddenFor(m => m.ZipCode, new { @id = "hdnZipCode" })
-            <div class="text-center">
-                <input type="submit" class="btn btn-primary">
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10 @ViewBag.AlertStatus">
-                    @ViewBag.FileStatus
-                </div>
-            </div>
-            <p id="geoLocation"></p>
-        }
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 @ViewBag.AlertStatus">
+            @ViewBag.FileStatus
+        </div>
+    </div>
+    <p id="geoLocation"></p>
+}
 
 
         <div class="row">
