@@ -11,6 +11,10 @@ namespace PetVision.Web
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            routes.IgnoreRoute("{fileName}.svg");
+            routes.IgnoreRoute("{fileName}.jpg");
+            routes.IgnoreRoute("{fileName}.html");
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
