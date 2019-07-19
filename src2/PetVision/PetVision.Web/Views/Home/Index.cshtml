@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PetVision.Web.Models.ImageToUpload
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -10,7 +11,9 @@
     <div class="col-md-4">
         @using (Html.BeginForm("UploadImage", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            <input type="file" accept="image/*;capture=camera">
+            @Html.AntiForgeryToken()
+            @*<input type="file" accept="image/*;capture=camera">*@
+            @Html.EditorFor(model => model.FileName, new { htmlAttributes = new { @class = "form-control", @type = "file", @accept = "image/*;capture=camera" } })
             <div class="text-center">
                 <input type="submit" class="btn btn-primary">
             </div>
@@ -20,6 +23,7 @@
                     @ViewBag.FileStatus
                 </div>
             </div>
+            
         }
     </div>
 </div>
