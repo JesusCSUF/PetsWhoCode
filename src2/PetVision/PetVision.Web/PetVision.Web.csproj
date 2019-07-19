@@ -165,11 +165,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CoverageType.cs" />
+    <Compile Include="Models\DisclaimerItem.cs" />
+    <Compile Include="Models\DisclaimerResponse.cs" />
+    <Compile Include="Models\Disclosure.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\ImageToUpload.cs" />
-    <Compile Include="Models\PetCondition.cs" />
+    <Compile Include="Models\Origin.cs" />
+    <Compile Include="Models\Owner.cs" />
+    <Compile Include="Models\PaymentCycle.cs" />
+    <Compile Include="Models\Pet.cs" />
     <Compile Include="Models\PetInfo.cs" />
+    <Compile Include="Models\PetPricing.cs" />
+    <Compile Include="Models\PostQuoteResponse.cs" />
     <Compile Include="Models\PredictionResult.cs" />
+    <Compile Include="Models\Pricing.cs" />
+    <Compile Include="Models\ProductPricingBreakdown.cs" />
+    <Compile Include="Models\ProductSpecification.cs" />
     <Compile Include="Models\QuotePageOneDataModel.cs" />
+    <Compile Include="Models\QuoteRequest.cs" />
+    <Compile Include="Models\QuoteResponse.cs" />
+    <Compile Include="Models\StandardMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
