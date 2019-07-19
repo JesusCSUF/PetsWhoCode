@@ -9,6 +9,6 @@ namespace PetVision.Web.Models
     {
         public string Condition { get; set; }
         public decimal ClaimAmount { get; set; }
-        public decimal PaidAdmount { get; set; }
+        public decimal PaidAmount { get; set; }
     }
 }
