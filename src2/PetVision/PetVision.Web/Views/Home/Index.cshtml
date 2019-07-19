@@ -11,7 +11,7 @@
     @Html.HiddenFor(m => m.State, new { @id = "hdnState" })
     @Html.HiddenFor(m => m.ZipCode, new { @id = "hdnZipCode" })
     <div class="text-center">
-        <input type="submit" class="btn btn-primary">
+        <input type="submit" id="btnSubmit" class="btn btn-primary hidden">
     </div>
 
     <div class="form-group">
@@ -75,6 +75,11 @@
                     console.log("City=" + city + ", State=" + state + ", ZipCode=" + zipCode);
                     x.innerHTML = "City=" + city + ", State=" + state + ", ZipCode=" + zipCode;
                 }
+
+                $("#file").change(function () {
+                    $("#btnSubmit").click();
+                });
+
                 $(function () {
                     getLocation();
                 });
