@@ -18,54 +18,99 @@
     }
 }
 
-<div class="row">
-    <div class="col-sm-12 header-msg">
-        <span>
-           It looks like you got a @Model.PredictedBreed
-        </span>
-    </div>
-    <div class="col-sm-12  image-header">
-        <img class="img-small" src="@imgSrc" />
-    </div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <td>Issue</td>
-            <td>Avg Claim</td>
-            <td>Avg Paid</td>
-            <td>Saving</td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var x in Model.PetConditions)
-        {
-        <tr>
-            <td>
-                @x.Condition
-            </td>
-            <td>
-                @decimal.Round(x.ClaimAmount,0)
-            </td>
-            <td>
-                @decimal.Round(x.PaidAmount,0)
-            </td>
-            <td>
-                @Decimal.Round(((x.ClaimAmount -  x.PaidAmount)/x.ClaimAmount)*100,0)%
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
 
 <div class="container-fluid">
-    <div class="col-lg-6 col-md-12">
-        <canvas id="myChart"></canvas>
+
+    <div class="row">
+        <div class="col-sm-12 header-msg">
+            <span>
+                It looks like you've got a @Model.PredictedBreed
+            </span>
+        </div>
+        <div class="col-sm-12  image-header">
+            <img class="img-small" src="@imgSrc" />
+        </div>
+
+        <section class="row section">
+            <div class="col-sm-12 col-sm-6">
+                <div class="section-header">Traits</div>
+                @Model.PetInfo.Traits
+            </div>
+    
+                <div class="col-sm-12 col-sm-6">
+                    <div class="section-header">Issues</div>
+                    @Model.PetInfo.Issues
+                </div>
+        </section>
+
+
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="section-header">Top 3 Claim conditions and avg claim expsense for @Model.PredictedBreed in @Model.State in ZipCode: @Model.ZipCode</span>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <canvas id="myChart2"></canvas>
+            </div>
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Issue</td>
+                    <td>Avg Claim</td>
+                    <td>Avg Paid</td>
+                    <td>Saving</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var x in Model.PetConditions)
+                {
+                    <tr>
+                        <td>
+                            @x.Condition
+                        </td>
+                        <td>
+                            @decimal.Round(x.ClaimAmount, 0)
+                        </td>
+                        <td>
+                            @decimal.Round(x.PaidAmount, 0)
+                        </td>
+                        <td>
+                            @Decimal.Round(((x.ClaimAmount - x.PaidAmount) / x.ClaimAmount) * 100, 0)%
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            @Model.Pet.ProductSpecification.ProductName
+        </div>
+        <ul class="quote-buttons">
+            @foreach (var x in Model.Pricings.Keys)
+            {
+
+                <li class="col-sm-12 card-slot">
+                    <div class="card">
+                        <div class="pet-old">
+                            @x
+                        </div>
+                        <div class="yearly">
+                            Annual Premium: $@Model.Pricings[x].Annual
+                        </div>
+                        <div class="monthly">
+                            Monthly Premium: $@Model.Pricings[x].Monthly
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
     </div>
-    <div class="col-lg-6 col-md-12">
-        <canvas id="myChart2"></canvas>
-    </div>
-</div>
+
+
 
 
     @section scripts {
@@ -73,7 +118,7 @@
         var backgroundColors = [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',          
+            'rgba(255, 206, 86, 0.2)',
             ];
 
             var backgroundColors2 = [
@@ -131,8 +176,6 @@
                 type: 'bar',
                 data: data,
             })
-
-
         });
         </script>
     }

@@ -181,6 +181,7 @@
     <Compile Include="Models\PostQuoteResponse.cs" />
     <Compile Include="Models\PredictionResult.cs" />
     <Compile Include="Models\Pricing.cs" />
+    <Compile Include="Models\PricingObject.cs" />
     <Compile Include="Models\ProductPricingBreakdown.cs" />
     <Compile Include="Models\ProductSpecification.cs" />
     <Compile Include="Models\QuotePageOneDataModel.cs" />

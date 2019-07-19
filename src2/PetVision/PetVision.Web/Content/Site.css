@@ -47,6 +47,14 @@ footer{
 
 .image-header{
     text-align:center;
+    margin-bottom:30px;
+}
+
+.section{
+    margin-bottom:30px;
+}
+.section-header{
+    font-weight:bold;
 }
 
     .image-header img {
@@ -57,7 +65,7 @@ footer{
 
     .image-header img.img-small{
         width:300px;
-        height:300px;
+       height:100%;
     }
 .header-msg
 {
@@ -65,26 +73,64 @@ footer{
     margin-bottom:5px;
 }
     .header-msg span {
-        font-size: 25px;
+        font-size: 35px;
+        font-weight:bold;
         font-family: 'Oswald', sans-serif;
     }
-/*
+
+.quote-buttons {
+    margin-top: 10px;
+    list-style: none
+}
+    .quote-buttons .card-slot{
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+        .quote-buttons .card {
+            width: 100%;
+            background-color: rgb(0,49,80);
+            padding-left: 30px;
+            padding-right: 30px;
+            padding-bottom: 20px;
+            padding-top: 20px;
+            border-radius: 25px;
+
+        }
+            .quote-buttons .card div {
+                color: antiquewhite;
+                position: relative;
+           }
+            .quote-buttons .card .pet-old {
+                font-size: 30px;
+                font-family: "Oswald",sans-serif;
+            }
+            .quote-buttons .card .yearly {
+                font-size: 20px;
+                display: inline-block;
+                margin-right:50px;
+            }
+            .quote-buttons .card .monthly {
+                font-size: 15px;
+                display: inline-block;
+            }
+
+            /*
 font-family: 'Oswald', sans-serif;
 font-family: 'Raleway', sans-serif;
 font-family: 'Open Sans', sans-serif;
 */
-/*
+            /*
     Upload button
 
 */
-.inputfile {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-}
+            .inputfile {
+                width: 0.1px;
+                height: 0.1px;
+                opacity: 0;
+                overflow: hidden;
+                position: absolute;
+                z-index: -1;
+            }
     .inputfile + label {
         font-size: 1.25em;
         font-weight: 700;

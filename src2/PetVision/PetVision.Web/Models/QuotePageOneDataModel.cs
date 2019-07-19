@@ -14,6 +14,9 @@ namespace PetVision.Web.Models
 
         public PetInfo PetInfo { get; set; }
 
-        public List<PetPricing> PetPricings { get; set; }
+        public string ZipCode { get; set; }
+        public string State { get; set; }
+        public PetPricing Pet { get; set; }
+        public Dictionary<string,PricingObject> Pricings { get; set; }
     }
 }
