@@ -32,7 +32,6 @@ namespace PetVision.Web.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
 
@@ -58,7 +57,8 @@ namespace PetVision.Web.Controllers
             var result = MakePredictionRequest2(imgByteArray);
 
             var predictions = JsonConvert.DeserializeObject<PredictionResult>(result);
-            return RedirectToAction("index","quote", new { data = predictions });
+            TempData["PetPrediction"] = predictions;
+            return RedirectToAction("index","quote");
             //return View("Index", new ImageToUpload { File = swriter, FileName = "Test" });
         }
 
@@ -84,7 +84,7 @@ namespace PetVision.Web.Controllers
             client.DefaultRequestHeaders.Add("Prediction-Key", "4d81205e0c5541e69003d0d8bc9717a5");
 
             // Prediction URL - replace this example URL with your valid Prediction URL.
-            string url = "https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/041d0e5b-306b-4f6b-9808-4e8f3fc90952/classify/iterations/IterationOne/image";
+            string url = "https://westus2.api.cognitive.microsoft.com/customvision/v3.0/Prediction/041d0e5b-306b-4f6b-9808-4e8f3fc90952/classify/iterations/Iteration2/image";
 
             HttpResponseMessage response;
 

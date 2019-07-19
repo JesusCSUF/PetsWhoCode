@@ -27,6 +27,31 @@
             </div>
             <p id="geoLocation"></p>
         }
+@using (Html.BeginForm("UploadImage", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.EditorFor(model => model.FileName, new { htmlAttributes = new { @class = "inputfile", @id = "file", @name = "file", @type = "file", @accept = "image/*;capture=camera" } })
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10 @ViewBag.AlertStatus">
+            @ViewBag.FileStatus
+        </div>
+    </div>
+}
+
+
+<div class="row">
+    <div class="col-sm-12 image-header">
+        <img src="~/Static/takepicture.jpg" />
+    </div>
+    <div class="col-md-12">
+        <div class="button__holder">
+            <h2>Snap!<h2><label class="plus" for="file"></label>
+        </div>
+    </div>    
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h4>Who we are</h4>
     </div>
 </div>
 

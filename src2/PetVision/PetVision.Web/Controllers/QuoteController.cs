@@ -13,6 +13,9 @@ namespace PetVision.Web.Controllers
         // GET: Quote
         public ActionResult Index()
         {
+            var prediction = (PredictionResult)TempData.Peek("PetPrediction");
+            var result = prediction.Predictions.OrderByDescending(x => x.Probability).First(x=>x.TagName != "Canine" && x.TagName != "Feline");
+
             string ipAddress = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
             if (string.IsNullOrEmpty(ipAddress))
             {
@@ -21,8 +24,6 @@ namespace PetVision.Web.Controllers
 
             
             ipAddress = "64.209.128.78";
-
-
 
             using (var ctx = new ClaimDataContext())
             {
