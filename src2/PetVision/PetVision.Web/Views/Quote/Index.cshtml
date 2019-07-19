@@ -9,12 +9,58 @@
 
 <ul>
 
-@foreach(var x in Model.PetInfos)
-{
-    <li>@x.Condition</li>
+    @foreach (var x in Model.PetInfos)
+    {
+        <li>@x.Condition</li>
 
-}
-
+    }
 </ul>
 
+<div class="container-fluid">
 
+    <canvas id="myChart" width="200" height="200"></canvas> 
+</div>
+
+
+@section scripts {
+    <script>
+
+        var backgroundColors = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+        ];
+
+        $(function () {
+            Chart.platform.disableCSSInjection = true;
+
+            var petinfos = @Html.Raw(Json.Encode(Model.PetInfos));
+
+            var conditionRanking = @Html.Raw(Json.Encode(Model.ConditionRanking));
+
+            var index = 1;
+            var conditionRankingCalc = conditionRanking.map(x => {
+                return index ++ * 10;
+            })
+
+
+                var ctx = document.getElementById('myChart');
+                var data = {
+                    datasets: [{
+                        data: conditionRankingCalc,
+                        backgroundColor: backgroundColors,
+                    }],
+                    labels: petinfos.map(x => x.Condition),                  
+                }
+                var myPieChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: data,                  
+            })
+
+            
+        });
+    </script>
+}

@@ -15,17 +15,21 @@ namespace PetVision.Web.Controllers
         {
             using (var ctx = new ClaimDataContext())
             {
-                var stuff = ctx.Conditions.Take(10).Select(x => new PetInfo
+                var stuff = ctx.Conditions.Take(3).OrderBy(x => x.Breed).OrderBy(x => x.Rank).Select(x => new PetInfo
                 {
                     ClaimAmount = x.ClaimAmount,
                     Condition = x.DiagnosisCodeDesc,
                     PaidAmount = x.PaidAmount,
+                    Rank = x.Rank,
                 }).ToList();
+
 
                 var dataModel = new PetVision.Web.Models.QuotePageOneDataModel
                 {
                     PetInfos = stuff,
+                    ConditionRanking = stuff.Select(x => x.Condition).ToList(),
                 };
+
 
                 return View(dataModel);
             }
