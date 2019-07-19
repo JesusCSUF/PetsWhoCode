@@ -29,12 +29,9 @@ namespace PetVision.Web.Controllers
             var petCity = TempData.Peek("PetCity");
             var petState = TempData.Peek("PetState");
             var petZipCode = TempData.Peek("PetZipCode");
-            //var predictedBreed = prediction.Predictions.OrderByDescending(x => x.Probability).First(x=>x.TagName != "Canine" && x.TagName != "Feline");
+            var predictedBreed = prediction.Predictions.OrderByDescending(x => x.Probability).First(x=>x.TagName != "Canine" && x.TagName != "Feline");
 
-            var predictedBreed = new Prediction
-            {
-                TagName = "American Curl Shorthair",
-            };
+           
 
             petState = "CA";
 
